@@ -6,7 +6,53 @@
   <body>
     <input type="username" placeholder="Username" id="username" /><br />
     <input type="password" placeholder="Password" id="password" /><br />
-    <input type="submit" value="Login" />
+    <input type="submit" value="Login" id="login" />
+    <!-- jQuery JavaScript Code-->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <!-- After loading jQuery, we may run some jQuery codes-->
+    <script>
+      $("#login").on("click", function () {
+        /* Previews line creates onclick event when login button is clicked
+           After the click button, we have to:
+           1. Read username and password in Javascript/jQuery.
+           2. Send these data in back end.
+           3. Receive the response.
+           All using Ajax requests, to avoid redirections.
+        */
+
+        //1.
+        var username = $("#username").val();
+        var password = $("#password").val();
+
+        //2.
+
+        $.ajax({
+          url: "check.php", // Same as action="check.php" in forms.
+          type: "POST", // Same as method="POST" in forms.
+          data: {
+            usernamePHP: username, // Same as name="usernamePHP" in form inputs
+            passwordPHP: password, // Same as name="passwordPHP" in form inputs
+          },
+          success: function (response) {
+            //if there is not any error in the previews lines
+            // variable response stands for the response you get from server.
+            // you may call this variable as you like, but keep in mind:
+            // whatever is the parameter inside success function, it is the response from the server.
+            if (response == "1") {
+              alert("Logged In Successfully");
+            } else {
+              alert("Error Password");
+            }
+            // Depending on the response, we do some work on front end.
+            // Back end (check.php) remains the same in both cases, forms or ajax requests
+          },
+        });
+      });
+    </script>
   </body>
 </html>
 
